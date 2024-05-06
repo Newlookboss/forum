@@ -1,0 +1,73 @@
+{{define "title"}}Favourite Posts{{end}}
+
+{{define "main"}}
+
+<div class="container">
+
+    <div class="card">
+        <div class=" card-inner1">
+
+
+            <h2>My Favourite Posts</h2>
+            <br>
+            {{if .Posts}}
+
+            {{range .Posts}}
+            <div class="metadata card-inner1">
+                <div id="postID" hidden>{{.PostID}}</div>
+
+                <a href="/post/view?id={{.PostID}}">
+
+                    <div class="titleCard">
+                        <p class="timeContent">{{humanDate .Created}}</p>
+
+                        <h3 id="query-output">{{.Title}}</h3>
+                    </div>
+
+                    <div class="titleCard">
+                        <p id="query-output" class="content">{{.Content}}</p>
+                        <p class="timeContent">By {{.Author}}</p>
+                    </div>
+                </a>
+
+
+                <div class="flexLDC">
+
+                    <button class="likeButton colorButton" post-id="{{.PostID}}" post-liked="{{.IsLiked}}">
+                        {{if .IsLiked}}
+                        <img class="likeIcon" src="/static/img/liked.png" alt="Like" width="20" height="20">
+                        {{else}}
+                        <img class="likeIcon" src="/static/img/like.png" alt="Like" width="20" height="20">
+                        {{end}}
+                        <span class="likeCount">{{.Likes}}</span>
+                    </button>
+
+                    <button class="dislikeButton colorButton" post-id="{{.PostID}}" post-disliked="{{.IsDisliked}}">
+                        {{if .IsDisliked}}
+                        <img class="dislikeIcon" src="/static/img/disliked.png" alt="Dislike" width="20" height="20">
+                        {{else}}
+                        <img class="dislikeIcon" src="/static/img/dislike.png" alt="Dislike" width="20" height="20">
+                        {{end}}
+                        <span class="dislikeCount">{{.Dislikes}}</span>
+                    </button>
+
+                    <form action="/post/view?id={{.PostID}}" method="post">
+                        <button class="colorButton">
+                            <img class="commentIcon" src="/static/img/comments.png" alt="Comment" width="20"
+                                height="20">
+                            <span class="likeCount">{{.Comments}}</span>
+                        </button>
+                    </form>
+                </div>
+            </div>
+            {{end}}
+            {{else}}
+            <br>
+            <h3>There's nothing to see here... yet!</h3>
+            {{end}}
+        </div>
+    </div><!-- not closed div  class="card-inner1"-->
+</div>
+</div>
+
+{{end}}

@@ -1,0 +1,150 @@
+{{define "title"}}My Profile{{end}}
+
+{{define "main"}}
+
+<div class="container">
+
+	<div class="card">
+		<div class="card-inner1">
+
+			<div class="profile-section">
+
+				<div class="card-inner1">
+					<div class="titleCard">
+						<p class="timeContent">{{humanDate .Post.Created}}</p>
+
+						<h3 id="query-output" >{{.Post.Title}}</h3>
+					</div>
+
+					<p id="query-output" class="content">{{.Post.Content}}</p>
+					<p class="timeContent">By {{.Post.Author}}</p>
+
+					{{if .IsLogged}}
+					<span>
+						<button class="likeButton colorButton" post-id="{{.Post.PostID}}"
+							post-liked="{{.Post.IsLiked}}">
+							{{if .Post.IsLiked}}
+							<img class="likeIcon" src="/static/img/liked.png" alt="Like" width="20" height="20">
+							{{else}}
+							<img class="likeIcon" src="/static/img/like.png" alt="Like" width="20" height="20">
+							{{end}}
+							<span class="likeCount">{{.Post.Likes}}</span>
+						</button>
+						<button class="dislikeButton colorButton" post-id="{{.Post.PostID}}"
+							post-disliked="{{.Post.IsDisliked}}">
+							{{if .Post.IsDisliked}}
+							<img class="dislikeIcon" src="/static/img/disliked.png" alt="Dislike" width="20"
+								height="20">
+							{{else}}
+							<img class="dislikeIcon" src="/static/img/dislike.png" alt="Dislike" width="20" height="20">
+							{{end}}
+							<span class="dislikeCount">{{.Post.Dislikes}}</span>
+						</button>
+					</span>
+
+
+					{{else}}
+					<time>
+						<button onclick="login()" class="colorButton">
+							<img src="/static/img/like.png" alt="Like" width="20" height="20"> <span
+								class="likeCount">{{.Post.Likes}}</span>
+						</button>
+						<button onclick="login()" class="colorButton">
+							<img src="/static/img/dislike.png" alt="Dislike" width="20" height="20"> <span
+								class="dislikeCount">{{.Post.Dislikes}}</span>
+						</button>
+					</time>
+					{{end}}
+				</div>
+			</div>
+
+			<p class="content"> {{.Post.Comments}} comment(-s):</p>
+
+			{{if .IsLogged}}
+			<div class="card-inner1">
+				<form action="/post/comment?id={{.Post.PostID}}" method="post">
+					<div class="messageBox">
+						<input required="" maxlength="200" placeholder="Message..." type="text" name="comment" id="messageInput">
+						<button id="sendButton" type="submit">
+							<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 664 663">
+								<path fill="none"
+									d="M646.293 331.888L17.7538 17.6187L155.245 331.888M646.293 331.888L17.753 646.157L155.245 331.888M646.293 331.888L318.735 330.228L155.245 331.888">
+								</path>
+								<path stroke-linejoin="round" stroke-linecap="round" stroke-width="33.67"
+									stroke="#6c6c6c"
+									d="M646.293 331.888L17.7538 17.6187L155.245 331.888M646.293 331.888L17.753 646.157L155.245 331.888M646.293 331.888L318.735 330.228L155.245 331.888">
+								</path>
+							</svg>
+						</button>
+					</div>
+				</form>
+				{{if .Comments}}
+				{{range .Comments}}
+				<div class="metadata card-inner1">
+
+					<h3>{{.Author}}:</h3>
+
+					<div id="query-output" style="margin:10px 0 15px;"> {{.Comment}}</div>
+
+					<div>
+						<button class="commentLikeButton colorButton" post-id="{{.PostID}}" comment-id="{{.CommentID}}"
+							comment-liked="{{.IsLiked}}">
+							{{if .IsLiked}}
+							<img class="commentLikeIcon" src="/static/img/liked.png" alt="Like" width="20" height="20">
+							{{else}}
+							<img class="commentLikeIcon" src="/static/img/like.png" alt="Like" width="20" height="20">
+							{{end}}
+							<span class="commentLikeCount">{{.Likes}}</span>
+						</button>
+						<button class="commentDislikeButton colorButton" post-id="{{.PostID}}"
+							comment-id="{{.CommentID}}" comment-disliked="{{.IsDisliked}}">
+							{{if .IsDisliked}}
+							<img class="commentDislikeIcon" src="/static/img/disliked.png" alt="Dislike" width="20"
+								height="20">
+							{{else}}
+							<img class="commentDislikeIcon" src="/static/img/dislike.png" alt="Dislike" width="20"
+								height="20">
+							{{end}}
+							<span class="commentDislikeCount">{{.Dislikes}}</span>
+						</button>
+					</div>
+				</div>
+				{{end}}
+				{{else}}
+				<br>
+				<h3>There's no comments to see here... yet!</h3>
+				{{end}}
+
+
+				{{else}}
+
+				{{if .Comments}}
+
+				{{range .Comments}}
+
+				<div class="metadata card-inner1">
+
+					<h3>{{.Author}}:</h3>
+					<div style="margin:10px 0 15px;"> {{.Comment}}</div>
+					<span>
+						<button class="colorButton" onclick="login()">
+							<img class="commentLikeIcon" src="/static/img/like.png" alt="Like" width="20" height="20">
+							<span class="commentLikeCount">{{.Likes}}</span>
+						</button>
+						<button onclick="login()" class="colorButton">
+							<img class="commentDislikeIcon" src="/static/img/dislike.png" alt="Dislike" width="20"
+								height="20"> <span class="commentDislikeCount">{{.Dislikes}}</span>
+						</button>
+					</span>
+				</div>
+				{{end}}
+				{{else}}
+				<br>
+				<h3>There's nothing to see here... yet!</h3>
+				{{end}}
+				{{end}}
+			</div>
+		</div>
+	</div>
+</div>
+{{end}}

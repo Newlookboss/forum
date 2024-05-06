@@ -1,0 +1,153 @@
+{{define "nav"}}
+
+<div id="RegisterForm">
+    <form class="form1" action="/user/signup" method="post">
+        <p class="title">Register </p>
+        <p class="message">Signup now and get full access to our app. </p>
+        <div class="flex">
+            <label>
+                <input class="input" type="text" maxlength="15" name="firstname" placeholder="" required="">
+                <span>Firstname</span>
+            </label>
+
+            <label>
+                <input class="input" type="text" maxlength="15" name="lastname" placeholder="" required="">
+                <span>Lastname</span>
+            </label>
+        </div>
+
+        <label>
+            <input class="input" type="email" maxlength="50" name="email" placeholder="" required="">
+            <span>Email</span>
+        </label>
+
+        <span id="EmailError" class="error"></span>
+        <label for="password">
+            <input class="input" id="password" type="password" maxlength="15" name="password" placeholder=""
+                required="">
+            <span>Password</span>
+        </label>
+        <label for="confirmPassword">
+            <input class="input" id="confirmPassword" type="password" maxlength="15" name="password2" placeholder=""
+                required="">
+            <span>Confirm password</span>
+        </label>
+
+        <span id="PasswordError" class="error"></span>
+        <button class="submit" type="submit" disabled>Submit</button>
+        <p class="signin">Already have an acount ? <a href="#" onclick="login()">login</a> </p>
+    </form>
+</div>
+
+<div id="loginForm">
+    <form class="form1" action="/user/login" method="post" novalidate>
+        <p class="title">Login</p>
+        <p class="message">Sign in to Art Space</p>
+        <span id="Message"></span>
+
+        <label>
+            <input class="input" maxlength="50" name="email" type="email" placeholder="" required="">
+            <span>Email</span>
+        </label>
+
+        <label>
+            <input class="input" maxlength="15" name="password" type="password" placeholder="" required="">
+            <span>Password</span>
+        </label>
+
+        <button class="submit" type="submit">Submit</button>
+        <p class="signin">Don't have an acount ? <br> <a href="#" onclick="register()">Sign-up</a> </p>
+    </form>
+</div>
+
+
+<div class="menu__list">
+    <div class="hamburger-menu">
+        <input id="menu__toggle" type="checkbox">
+        <label class="menu__btn" for="menu__toggle">
+            <span></span>
+            <span></span>
+            <span></span>
+        </label>
+        <ul class="menu__box">
+            <li><a class="menu__item" href="/">Home</a></li>
+            {{if .IsLogged}}
+            <li><a class="menu__item" href='/user/profile'>My profile</a></li>
+            <li><a class="menu__item" href='/user/favourites'>Favourite posts</a></li>
+            <li><a class="menu__item" href='/user/logout'>Log out</a></li>
+            {{else}}
+            <li><a class="menu__item" href="/user/signup">Sign up</a></li>
+            <li><a class="menu__item" href="/user/login">Log in</a></li>
+            {{end}}
+        </ul>
+    </div>
+    <ul class="menu__row">
+        <li class="menu__nav"><a class="cta" href="/"><span>Home</span></a></li>
+        {{if .IsLogged}}
+        <li class="menu__nav">
+            <a href='/user/profile'>
+                <div class="dropdown cta1">
+                    <span class="span">{{.User.Firstname}}</span>
+                    <div class="dropdown-content">
+                        <div class="dropdown-cont">
+                            <a href='/user/profile' class="value">
+                                <svg fill="inherit"  viewBox="0 0 16 16" height="18">
+                                    <path fill="#7D8590"
+                                        d="m1.5 13v1a.5.5 0 0 0 .3379.4731 18.9718 18.9718 0 0 0 6.1621 1.0269 18.9629 18.9629 0 0 0 6.1621-1.0269.5.5 0 0 0 .3379-.4731v-1a6.5083 6.5083 0 0 0 -4.461-6.1676 3.5 3.5 0 1 0 -4.078 0 6.5083 6.5083 0 0 0 -4.461 6.1676zm4-9a2.5 2.5 0 1 1 2.5 2.5 2.5026 2.5026 0 0 1 -2.5-2.5zm2.5 3.5a5.5066 5.5066 0 0 1 5.5 5.5v.6392a18.08 18.08 0 0 1 -11 0v-.6392a5.5066 5.5066 0 0 1 5.5-5.5z"
+                                        ></path>
+                                </svg>
+
+                                <span>My profile</span>
+                            </a>
+                            <a href='/user/favourites' class="value">
+                                <svg fill="inherit" viewBox="0 0 20 18" height="18"
+                                    width="20" class="icon favorite" style="filter: invert(); fill: #52555a;">
+                                    <path fill="inherit"
+                                        d="M14.44 0C12.63 0 11.01 0.88 10 2.23C9.48413 1.53881 8.81426 0.977391 8.04353 0.590295C7.27281 0.203198 6.42247 0.00108555 5.56 0C2.49 0 0 2.5 0 5.59C0 6.78 0.19 7.88 0.52 8.9C2.1 13.9 6.97 16.89 9.38 17.71C9.72 17.83 10.28 17.83 10.62 17.71C13.03 16.89 17.9 13.9 19.48 8.9C19.81 7.88 20 6.78 20 5.59C20 2.5 17.51 0 14.44 0Z">
+                                    </path>
+                                </svg>
+                                <span>Favourite posts</span>
+                            </a>
+                            <a href='/user/logout' class="value">
+                                <svg fill="#fff" viewBox="0 0 384.971 384.971" xml:space="preserve" stroke="#fff">
+                                    <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+                                    <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
+                                    <g id="SVGRepo_iconCarrier">
+                                        <g>
+                                            <g id="Sign_Out">
+                                                <path
+                                                    d="M180.455,360.91H24.061V24.061h156.394c6.641,0,12.03-5.39,12.03-12.03s-5.39-12.03-12.03-12.03H12.03 C5.39,0.001,0,5.39,0,12.031V372.94c0,6.641,5.39,12.03,12.03,12.03h168.424c6.641,0,12.03-5.39,12.03-12.03 C192.485,366.299,187.095,360.91,180.455,360.91z">
+                                                </path>
+                                                <path
+                                                    d="M381.481,184.088l-83.009-84.2c-4.704-4.752-12.319-4.74-17.011,0c-4.704,4.74-4.704,12.439,0,17.179l62.558,63.46H96.279 c-6.641,0-12.03,5.438-12.03,12.151c0,6.713,5.39,12.151,12.03,12.151h247.74l-62.558,63.46c-4.704,4.752-4.704,12.439,0,17.179 c4.704,4.752,12.319,4.752,17.011,0l82.997-84.2C386.113,196.588,386.161,188.756,381.481,184.088z">
+                                                </path>
+                                            </g>
+                                        </g>
+                                    </g>
+
+                                </svg>
+                                <span>Log out</span>
+                            </a>
+                        </div>
+                     
+
+
+                    </div>
+                </div>
+            </a></li>
+        {{else}}
+        <li class="menu__nav"><button class="cta" onclick="login()"><span>Log in</span></button></li>
+        <li class="menu__nav"><button class="cta" onclick="register()">
+                <span>Sign up</span>
+                <svg width="15px" height="10px" viewBox="0 0 13 10">
+                    <path d="M1,5 L11,5"></path>
+                    <polyline points="8 1 12 5 8 9"></polyline>
+                </svg></button></li>
+
+        {{end}}
+    </ul>
+</div>
+
+
+
+{{end}}

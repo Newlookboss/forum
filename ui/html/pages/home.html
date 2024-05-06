@@ -1,0 +1,237 @@
+{{define "title"}}Home{{end}}
+
+{{define "main"}}
+<div class="container ">
+
+	<div class="postAkk">
+
+
+		<div class="akk">
+
+			<div class="card">
+
+				{{if .IsLogged}}
+				<form action="/post/create" method="post">
+					<div class="metadata card-inner1">
+						<div class="form__input" id="redirectDiv">
+							<input id="myInput" maxlength="99" type="text" placeholder="Title" name="title">
+						</div>
+
+						<div class="form__input">
+							<textarea id="myTextarea" maxlength="1000" placeholder="Description" name="description"></textarea>
+						</div>
+
+						<div class="grid__content">
+							<div class="customCheckBoxHolder">
+
+								<input type="checkbox" class="customCheckBoxInput" id="checkbox-1" name="category"
+									value="Realism" autocomplete="off">
+								<label class="customCheckBoxWrapper" for="checkbox-1">
+									<div class="customCheckBox">
+										<div class="inner">Realism</div>
+									</div>
+								</label>
+
+								<input type="checkbox" class="customCheckBoxInput" id="checkbox-2" name="category"
+									value="Surrealism" autocomplete="off">
+								<label class="customCheckBoxWrapper" for="checkbox-2">
+									<div class="customCheckBox">
+										<div class="inner">Surrealism</div>
+									</div>
+								</label>
+
+								<input type="checkbox" class="customCheckBoxInput" id="checkbox-3" name="category"
+									value="Impressionism" autocomplete="off">
+								<label class="customCheckBoxWrapper" for="checkbox-3">
+									<div class="customCheckBox">
+										<div class="inner">Impressionism</div>
+									</div>
+								</label>
+
+								<input type="checkbox" class="customCheckBoxInput" id="checkbox-4" name="category"
+									value="Renaissance" autocomplete="off">
+								<label class="customCheckBoxWrapper" for="checkbox-4">
+									<div class="customCheckBox">
+										<div class="inner">Renaissance</div>
+									</div>
+								</label>
+
+								<input type="checkbox" class="customCheckBoxInput" id="checkbox-5" name="category"
+									value="Other" autocomplete="off">
+								<label class="customCheckBoxWrapper" for="checkbox-5">
+									<div class="customCheckBox">
+										<div class="inner">Other</div>
+									</div>
+								</label>
+
+							</div>
+
+
+						</div>
+						<div class="error-message" id="category-error" style="display: none; color: red;">Please choose
+							at least one category.
+						</div>
+						<button type="submit" class="ui-btn submit2">
+							<span>
+								Post
+							</span>
+						</button>
+
+					</div>
+				</form>
+
+				{{end}}
+
+				<div class="metadata card-inner">
+
+					<form method="post">
+						<div>
+
+							<div class="customCheckBoxHolder customCheckBoxHolder1">
+
+								<input type="checkbox" class="customCheckBoxInput" id="checkbo-1" name="category"
+									value="Realism" autocomplete="off">
+								<label class="customCheckBoxWrapper" for="checkbo-1">
+									<div class="customCheckBox">
+										<div class="inner">Realism</div>
+									</div>
+								</label>
+
+								<input type="checkbox" class="customCheckBoxInput" id="checkbo-2" name="category"
+									value="Surrealism" autocomplete="off">
+								<label class="customCheckBoxWrapper" for="checkbo-2">
+									<div class="customCheckBox">
+										<div class="inner">Surrealism</div>
+									</div>
+								</label>
+
+								<input type="checkbox" class="customCheckBoxInput" id="checkbo-3" name="category"
+									value="Impressionism" autocomplete="off">
+								<label class="customCheckBoxWrapper" for="checkbo-3">
+									<div class="customCheckBox">
+										<div class="inner">Impressionism</div>
+									</div>
+								</label>
+
+								<input type="checkbox" class="customCheckBoxInput" id="checkbo-4" name="category"
+									value="Renaissance" autocomplete="off">
+								<label class="customCheckBoxWrapper" for="checkbo-4">
+									<div class="customCheckBox">
+										<div class="inner">Renaissance</div>
+									</div>
+								</label>
+
+								<input type="checkbox" class="customCheckBoxInput" id="checkbo-5" name="category"
+									value="Other" autocomplete="off">
+								<label class="customCheckBoxWrapper" for="checkbo-5">
+									<div class="customCheckBox">
+										<div class="inner">Other</div>
+									</div>
+								</label>
+								<input type="submit" class="customCheckBoxInput" id="checkbo-6">
+								<label class="customCheckBoxWrapper" for="checkbo-6">
+									<div class="customCheckBox">
+										<div class="inner" style="filter: invert();"> <svg viewBox="0 0 512 512"
+												height="1em" xmlns="http://www.w3.org/2000/svg" class="search_icon">
+												<path
+													d="M416 208c0 45.9-14.9 88.3-40 122.7L502.6 457.4c12.5 12.5 12.5 32.8 0 45.3s-32.8 12.5-45.3 0L330.7 376c-34.4 25.2-76.8 40-122.7 40C93.1 416 0 322.9 0 208S93.1 0 208 0S416 93.1 416 208zM208 352a144 144 0 1 0 0-288 144 144 0 1 0 0 288z">
+												</path>
+											</svg></div>
+									</div>
+								</label>
+
+
+							</div>
+						</div>
+
+
+
+					</form>
+					{{if .Posts}}
+					{{range .Posts}}
+					<div class="metadata card-inner">
+						<div id="postID" hidden>{{.PostID}}</div>
+
+						<a href="post/view?id={{.PostID}}">
+
+							<div class="titleCard">
+								<p class="timeContent">{{humanDate .Created}}</p>
+
+								<h3 id="query-output" >{{.Title}}</h3>
+							</div>
+							<div class="titleCard metadata">
+								<p id="query-output" class=" content">{{.Content}}</p>
+								<p class="timeContent">By {{.Author}}</p>
+
+
+
+							</div>
+						</a>
+
+						{{if .IsLogged}}
+
+						<span class="flexLDC">
+							<button class="likeButton colorButton" post-id="{{.PostID}}" post-liked="{{.IsLiked}}">
+								{{if .IsLiked}}
+								<img class="likeIcon" src="/static/img/liked.png" alt="Like" width="20" height="20">
+								{{else}}
+								<img class="likeIcon" src="/static/img/like.png" alt="Like" width="20" height="20">
+								{{end}}
+								<span class="likeCount">{{.Likes}}</span>
+							</button>
+							<button class="dislikeButton colorButton" post-id="{{.PostID}}"
+								post-disliked="{{.IsDisliked}}">
+								{{if .IsDisliked}}
+								<img class="dislikeIcon" src="/static/img/disliked.png" alt="Dislike" width="20"
+									height="20">
+								{{else}}
+								<img class="dislikeIcon" src="/static/img/dislike.png" alt="Dislike" width="20"
+									height="20">
+								{{end}}
+								<span class="dislikeCount">{{.Dislikes}}</span>
+							</button>
+							<form action="/post/view?id={{.PostID}}" method="post">
+								<button class="colorButton">
+									<img src="/static/img/comments.png" alt="Comment" width="20" height="20"> <span
+										class="likeCount">{{.Comments}}</span>
+								</button>
+							</form>
+
+						</span>
+						<p class="timeContent">Tags: {{.Tags}}</p>
+						{{else}}
+						<time class="flexLDC">
+							<button onclick="login()" class="colorButton">
+								<img src="/static/img/like.png" alt="Like" width="20" height="20"> <span
+									class="likeCount">{{.Likes}}</span>
+							</button>
+							<button onclick="login()" class="colorButton">
+								<img src="/static/img/dislike.png" alt="Dislike" width="20" height="20"> <span
+									class="dislikeCount">{{.Dislikes}}</span>
+							</button>
+
+							<form action="/post/view?id={{.PostID}}" method="post">
+								<button class="colorButton">
+									<img src="/static/img/comments.png" alt="Comment" width="20" height="20"> <span
+										class="likeCount">{{.Comments}}</span>
+								</button>
+							</form>
+						</time>
+						<p class="timeContent">Tags: {{.Tags}}</p>
+
+						{{end}}
+
+					</div>
+					{{end}}
+					{{else}}
+					<br>
+					<h3>There's nothing to see here... yet!</h3>
+					{{end}}
+				</div>
+
+			</div>
+		</div>
+	</div>
+</div>
+
+{{end}}
