@@ -30,7 +30,7 @@ make build_docker
 ```bash
 make run_docker
 ```
-5. Open your web browser and go to http://localhost:8080.
+5. Open your web browser and go to http://localhost:4000.
 
 If you want to run without Docker:
 ```bash
